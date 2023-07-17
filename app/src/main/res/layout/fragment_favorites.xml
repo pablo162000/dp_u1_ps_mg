@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/color_background"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="Buscador"
+        android:textColor="@color/title_color_dm"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/txtFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:backgroundTint="@drawable/edittext_line_color"
+        android:imeOptions="actionSearch"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="#ADFFEB"
+        android:textSize="14sp"></EditText>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMarvelChars"
+        android:layout_width="365dp"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+
+        />
+
+
+</LinearLayout>
