@@ -1,14 +1,16 @@
 package com.example.dispositivosmoviles.ui.activities
 
-import android.annotation.SuppressLint
+
+import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.contract.ActivityResultContracts.*
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult.*
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -17,7 +19,6 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.lifecycleScope
 import com.example.dispositivosmoviles.databinding.ActivityMainBinding
 import com.example.dispositivosmoviles.logic.validator.LoginValidator
-import com.example.dispositivosmoviles.ui.utilities.DispositivosMoviles
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -98,6 +99,53 @@ class MainActivity : AppCompatActivity() {
                     Snackbar.LENGTH_LONG
                 ).show()
             }
+        }
+
+        binding.btnTwitter.setOnClickListener{
+//            val intent = Intent(
+//                Intent.ACTION_VIEW,
+//
+//                // Uri.parse("geo:-0.2006288,-78.5786066")
+//                Uri.parse("tel:0123456789")
+//                //Uri.parse("https://developer.android.com/guide/components/intents-filters?hl=es-419")
+//            )
+            val intent = Intent(Intent.ACTION_WEB_SEARCH
+            )
+            intent.setClassName("com.google.android.googlequicksearchbox",
+                "com.google.android.googlequicksearchbox.SearchActivity")
+            intent.putExtra(SearchManager.QUERY,"uce")
+            startActivity(intent)
+        }
+
+        //como parametro necesitamos
+        val appResultLocal = registerForActivityResult(StartActivityForResult()) { resultActivity ->
+           when(resultActivity.resultCode){
+               RESULT_OK -> {
+                   Snackbar.make(
+                       binding.textView,
+                       "Resultado exitoso",
+                       Snackbar.LENGTH_LONG
+                   )
+               }
+               RESULT_CANCELED -> {
+                   Snackbar.make(
+                       binding.textView,
+                       "Resultado fallido",
+                       Snackbar.LENGTH_LONG
+                   )
+               }
+               else -> {
+                   Snackbar.make(
+                       binding.textView,
+                       "Resultado dudoso",
+                       Snackbar.LENGTH_LONG
+                   )
+               }
+           }
+        }
+        binding.btnResult.setOnClickListener {
+            val resIntent = Intent(this,ResultActivity::class.java)
+            appResultLocal.launch(resIntent)
         }
 
     }
