@@ -6,6 +6,7 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.location.Geocoder
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,6 +15,7 @@ import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.*
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult.*
+import androidx.core.content.PermissionChecker.PermissionResult
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -23,11 +25,14 @@ import androidx.lifecycle.lifecycleScope
 import com.example.dispositivosmoviles.R
 import com.example.dispositivosmoviles.databinding.ActivityMainBinding
 import com.example.dispositivosmoviles.logic.validator.LoginValidator
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.Locale
 import java.util.UUID
+import java.util.jar.Manifest
 
 //datastore de tipo preference, "name" es el nombre de la mini base de datos de clave y valor
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -36,6 +41,7 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "se
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     //reescribir la funcion onCreate que hereda de  AppCompactActivity
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
     override fun onStart() {
@@ -58,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
-    @SuppressLint("ResourceType")
+    @SuppressLint("ResourceType", "MissingPermission")
     private fun initClass() {
         binding.btnIngresar.setOnClickListener {
             //binding.txtBuscar.text = "El codigo ejecuta correctamente"
@@ -107,7 +114,57 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        val locationContract = registerForActivityResult(RequestPermission()) { isGranted ->
+            when (isGranted) {
+                true -> {
+                    val task = fusedLocationProviderClient.lastLocation
+//                    fusedLocationProviderClient.lastLocation.addOnSuccessListener {
+//                        it.latitude
+//                        it.longitude
+//                        val a =Geocoder(this)
+//                        a.getFromLocation(it.latitude,it.longitude,1)
+                    task.addOnSuccessListener {
+                        if (task.result != null) {
+                            Snackbar.make(
+                                binding.textView,
+                                "${it.latitude}, ${it.longitude}",
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                        } else {
+                            Snackbar.make(
+                                binding.textView,
+                                "Encienda el gps por favor",
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+
+
+                }
+
+                shouldShowRequestPermissionRationale(
+                    android.Manifest.permission.ACCESS_FINE_LOCATION
+                ) -> {
+                    Snackbar.make(
+                        binding.textView,
+                        "Ayude con el permiso porfa",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+
+                false -> {
+                    Snackbar.make(
+                        binding.textView,
+                        "Denegado",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+
+            }
+        }
+
         binding.btnTwitter.setOnClickListener {
+            locationContract.launch(android.Manifest.permission.ACCESS_FINE_LOCATION)
 //            val intent = Intent(
 //                Intent.ACTION_VIEW,
 //
@@ -115,55 +172,55 @@ class MainActivity : AppCompatActivity() {
 //                Uri.parse("tel:0123456789")
 //                //Uri.parse("https://developer.android.com/guide/components/intents-filters?hl=es-419")
 //            )
-            val intent = Intent(
-                Intent.ACTION_WEB_SEARCH
-            )
-            intent.setClassName(
-                "com.google.android.googlequicksearchbox",
-                "com.google.android.googlequicksearchbox.SearchActivity"
-            )
-            intent.putExtra(SearchManager.QUERY, "uce")
-            startActivity(intent)
+//            val intent = Intent(
+//                Intent.ACTION_WEB_SEARCH
+//            )
+//            intent.setClassName(
+//                "com.google.android.googlequicksearchbox",
+//                "com.google.android.googlequicksearchbox.SearchActivity"
+//            )
+//            intent.putExtra(SearchManager.QUERY, "uce")
+//            startActivity(intent)
         }
 
         //como parametro necesitamos
-        val appResultLocal = registerForActivityResult(StartActivityForResult()) { resultActivity ->
+        val appResultLocal =
+            registerForActivityResult(StartActivityForResult()) { resultActivity ->
 
-            val sn = Snackbar.make(
-                binding.textView,
-                " ",
-                Snackbar.LENGTH_LONG
-            )
-            var color: Int = resources.getColor(R.color.black)
-            var message =
-                when (resultActivity.resultCode) {
-                    RESULT_OK -> {
+                val sn = Snackbar.make(
+                    binding.textView,
+                    " ",
+                    Snackbar.LENGTH_LONG
+                )
+                var color: Int = resources.getColor(R.color.black)
+                var message =
+                    when (resultActivity.resultCode) {
+                        RESULT_OK -> {
 
-                        sn.setBackgroundTint(resources.getColor(R.color.blue))
-                        resultActivity.data?.getStringExtra("result").orEmpty()
+                            sn.setBackgroundTint(resources.getColor(R.color.blue))
+                            resultActivity.data?.getStringExtra("result").orEmpty()
 
 
+                        }
 
+                        RESULT_CANCELED -> {
+                            sn.setBackgroundTint(resources.getColor(R.color.red))
+
+                            resultActivity.data?.getStringExtra("result").orEmpty()
+                        }
+
+                        else -> {
+                            "Dudoso"
+                        }
                     }
-
-                    RESULT_CANCELED -> {
-                        sn.setBackgroundTint(resources.getColor(R.color.red))
-
-                        resultActivity.data?.getStringExtra("result").orEmpty()
-                    }
-
-                    else -> {
-                        "Dudoso"
-                    }
-                }
-            sn.setText(message)
-            sn.show()
+                sn.setText(message)
+                sn.show()
 
 
+            }
 
-        }
-
-        val speechToText = registerForActivityResult(StartActivityForResult()){activityResult ->
+        val speechToText =
+            registerForActivityResult(StartActivityForResult()) { activityResult ->
 
                 val sn = Snackbar.make(
                     binding.textView,
@@ -171,17 +228,18 @@ class MainActivity : AppCompatActivity() {
                     Snackbar.LENGTH_LONG
                 )
 
-                var message=""
+                var message = ""
                 when (activityResult.resultCode) {
 
-                    RESULT_OK ->
-                    {
+                    RESULT_OK -> {
 
 
-                      val  msg = activityResult.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)?.get(0).toString()
+                        val msg =
+                            activityResult.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                                ?.get(0).toString()
 
 
-                        if(msg.isNotEmpty()){
+                        if (msg.isNotEmpty()) {
 
                             val intent = Intent(
                                 Intent.ACTION_WEB_SEARCH
@@ -195,14 +253,15 @@ class MainActivity : AppCompatActivity() {
 
                         }
                     }
-                    RESULT_CANCELED-> {
+
+                    RESULT_CANCELED -> {
                         message = "Proceso Cancelado"
                         sn.setBackgroundTint(resources.getColor(R.color.red))
 
                     }
 
                     else -> {
-                        message= "Ocurrio"
+                        message = "Ocurrio"
 
                         sn.setBackgroundTint(resources.getColor(R.color.red))
 
@@ -214,14 +273,11 @@ class MainActivity : AppCompatActivity() {
                 sn.show()
 
 
-
-
-
-        }
+            }
 
 
         binding.btnResult.setOnClickListener {
-            val intentSpeech = Intent( RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+            val intentSpeech = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
 
             intentSpeech.putExtra(
                 RecognizerIntent.EXTRA_LANGUAGE_MODEL,
@@ -240,8 +296,6 @@ class MainActivity : AppCompatActivity() {
             speechToText.launch(intentSpeech)
 
         }
-
-
 
 
     }
