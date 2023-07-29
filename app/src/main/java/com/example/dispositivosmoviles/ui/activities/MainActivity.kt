@@ -5,20 +5,16 @@ import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.location.Geocoder
 import android.location.Location
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
+import android.provider.Settings
 import android.speech.RecognizerIntent
 import android.util.Log
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.*
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult.*
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.PermissionChecker.PermissionResult
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -28,13 +24,18 @@ import androidx.lifecycle.lifecycleScope
 import com.example.dispositivosmoviles.R
 import com.example.dispositivosmoviles.databinding.ActivityMainBinding
 import com.example.dispositivosmoviles.logic.validator.LoginValidator
+import com.example.dispositivosmoviles.utilities.MyLocationManager
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.LocationSettingsRequest
+import com.google.android.gms.location.LocationSettingsStates
+import com.google.android.gms.location.LocationSettingsStatusCodes
 import com.google.android.gms.location.Priority
+import com.google.android.gms.location.SettingsClient
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,6 +54,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
+
+
+    private lateinit var client: SettingsClient
+    private lateinit var locationSettingRequest: LocationSettingsRequest
 
     private var currentLocation: Location? = null
     val speechToText =
@@ -115,31 +120,39 @@ class MainActivity : AppCompatActivity() {
     val locationContract = registerForActivityResult(RequestPermission()) { isGranted ->
         when (isGranted) {
             true -> {
+
+                client.checkLocationSettings(locationSettingRequest).apply {
+                    addOnSuccessListener {
+                        val task = fusedLocationProviderClient.lastLocation
+                        task.addOnSuccessListener { location ->
+                            fusedLocationProviderClient.requestLocationUpdates(
+                                locationRequest,
+                                locationCallback,
+                                Looper.getMainLooper()
+                            )
+                        }
+                    }
+
+                    addOnFailureListener() { ex ->
+                        if (ex is ResolvableApiException) {
+                            ex.startResolutionForResult(
+                                this@MainActivity,
+                                LocationSettingsStatusCodes.RESOLUTION_REQUIRED
+                            )
+                        }
+
+                    }
+                }
+
                 val task = fusedLocationProviderClient.lastLocation
-//                    fusedLocationProviderClient.lastLocation.addOnSuccessListener {
-//                        it.latitude
-//                        it.longitude
-//                        val a =Geocoder(this)
-//                        a.getFromLocation(it.latitude,it.longitude,1)
+
+
+
+
+
+
                 task.addOnSuccessListener { location ->
 
-                    val alert = AlertDialog.Builder(
-                        this
-                    )
-                    alert.apply {
-                        setTitle("Alerta")
-                        setMessage("Existe un problema con el sistema de posicionamiento global en el sistema de tu telefono")
-                        setPositiveButton("OK") { dialog, id ->
-
-                            dialog.dismiss()
-                        }
-                        setNegativeButton("Cancelar"){ dialog, id ->
-                            dialog.dismiss()
-                        }
-                        setCancelable(false)
-                    }.create()
-
-                    alert.show()
 
                     //actualizar la localizacion
                     fusedLocationProviderClient.requestLocationUpdates(
@@ -151,9 +164,30 @@ class MainActivity : AppCompatActivity() {
 
                 }
 
-                task.addOnFailureListener {
+                val alert = AlertDialog.Builder(
+                    this
+                )
+                alert.apply {
+                    setTitle("Notificacion")
+                    setMessage("Por favor verifique que el gps esta activado")
+                    setPositiveButton("Verificar") { dialog, id ->
 
-                }
+                        val i = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+//                        startActivity(i)
+//                        dialog.dismiss()
+                    }
+
+                    setCancelable(false)
+                }.show()
+
+//                task.addOnFailureListener { ex ->
+//                    if (ex is ResolvableApiException) {
+//                        ex.startResolutionForResult(
+//                            this@MainActivity,
+//                            LocationSettingsStatusCodes.RESOLUTION_REQUIRED
+//                        )
+//                    }
+//                }
 
 
             }
@@ -187,12 +221,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+
         locationRequest = LocationRequest.Builder(
             Priority.PRIORITY_HIGH_ACCURACY, //tipo de localizacion
             2000
         )//intervalo de actualizacion
             // .setMaxUpdates(3) //cuantas veces vamos a solicitar la ubicacion
             .build()
+
+        client = LocationServices.getSettingsClient(this)
+        locationSettingRequest =
+            LocationSettingsRequest.Builder().addLocationRequest(locationRequest).build()
 
         //clase abstracta no se puede instanciar, se esta heredando a la variable los metodos que tiene
         locationCallback = object : LocationCallback() {
@@ -357,6 +396,13 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+
+    }
+
+
+    private fun test() {
+        var location = MyLocationManager(this)
+        location.gerUserLocation()
 
     }
 
