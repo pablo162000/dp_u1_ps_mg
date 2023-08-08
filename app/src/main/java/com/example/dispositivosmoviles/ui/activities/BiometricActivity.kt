@@ -4,20 +4,27 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import android.view.View
+import androidx.activity.viewModels
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
 import com.example.dispositivosmoviles.R
 import com.example.dispositivosmoviles.databinding.ActivityBiometricBinding
+import com.example.dispositivosmoviles.ui.viewmodels.BiometricViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 
 class BiometricActivity : AppCompatActivity() {
 
 
     private lateinit var binding: ActivityBiometricBinding
 
+    private val biometricViewModel by viewModels<BiometricViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +34,25 @@ class BiometricActivity : AppCompatActivity() {
         binding.btnAutentication.setOnClickListener {
 
 
-            autenticateBiometric()
+           // autenticateBiometric()
+            lifecycleScope.launch {
+                biometricViewModel.chargingData()
+            }
+        }
+
+        biometricViewModel.isLoading.observe(this) { isLoading ->
+            if (isLoading){
+                binding.lytMain1.visibility= View.GONE
+                binding.lytMainCopia.visibility= View.VISIBLE
+            }else{
+                binding.lytMain1.visibility= View.VISIBLE
+                binding.lytMainCopia.visibility= View.GONE
+            }
+
+        }
+
+        lifecycleScope.launch {
+            biometricViewModel.chargingData()
         }
 
 
@@ -54,7 +79,7 @@ class BiometricActivity : AppCompatActivity() {
 
                     override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                         super.onAuthenticationSucceeded(result)
-                        startActivity(Intent(this@BiometricActivity,PrincipalActivity::class.java))
+                        startActivity(Intent(this@BiometricActivity, PrincipalActivity::class.java))
                     }
 
                     override fun onAuthenticationFailed() {
@@ -77,7 +102,7 @@ class BiometricActivity : AppCompatActivity() {
 
     private fun checkBiometric(): Boolean {
 
-        var returnValid : Boolean = false
+        var returnValid: Boolean = false
         val biometricManager = BiometricManager.from(this)
 
         when (biometricManager.canAuthenticate(
