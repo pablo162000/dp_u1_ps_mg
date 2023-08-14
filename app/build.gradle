@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
+    id("com.google.gms.google-services")
 
 }
 
@@ -89,5 +90,15 @@ dependencies {
 
     //Shimmer
     implementation("com.facebook.shimmer:shimmer:0.1.0@aar")
+
+    // Import the Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:32.2.2"))
+
+
+    implementation("com.google.firebase:firebase-analytics-ktx")
+
+    implementation("com.google.firebase:firebase-auth-ktx")
+
+
 
 }
