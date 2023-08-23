@@ -426,6 +426,9 @@ class MainActivity : AppCompatActivity() {
 //            startActivity(intent)
         }
 
+
+
+
         //como parametro necesitamos
         val appResultLocal =
             registerForActivityResult(StartActivityForResult()) { resultActivity ->
@@ -484,6 +487,14 @@ class MainActivity : AppCompatActivity() {
 
             speechToText.launch(intentSpeech)
 
+        }
+
+
+        binding.btnHuella.setOnClickListener {
+
+
+            val miIntent = Intent(this@MainActivity,BiometricActivity::class.java)
+            startActivity(miIntent)
         }
 
 
