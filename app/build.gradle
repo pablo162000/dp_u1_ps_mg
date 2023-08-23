@@ -100,5 +100,8 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx")
 
 
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.2.0'
+
+
 
 }
