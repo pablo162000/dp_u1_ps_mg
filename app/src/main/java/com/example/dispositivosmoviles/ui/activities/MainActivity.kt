@@ -408,7 +408,6 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.btnTwitter.setOnClickListener {
-            locationContract.launch(android.Manifest.permission.ACCESS_FINE_LOCATION)
 //            val intent = Intent(
 //                Intent.ACTION_VIEW,
 //
