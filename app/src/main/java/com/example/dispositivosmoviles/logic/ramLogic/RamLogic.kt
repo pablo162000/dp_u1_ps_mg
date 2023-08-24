@@ -5,10 +5,12 @@ import com.example.dispositivosmoviles.data.endpoints.JikanEndpoint
 import com.example.dispositivosmoviles.data.endpoints.RickAndMortyEndpoint
 import com.example.dispositivosmoviles.data.entities.marvel.characters.database.MarvelCharsBD
 import com.example.dispositivosmoviles.data.entities.marvel.characters.getMarvelChars
+import com.example.dispositivosmoviles.data.entities.ram.database.RamCharsDB
 import com.example.dispositivosmoviles.data.entities.ram.getRamChars
 import com.example.dispositivosmoviles.logic.data.MarvelChars
 import com.example.dispositivosmoviles.logic.data.RamChars
 import com.example.dispositivosmoviles.logic.data.getMarvelCharsDB
+import com.example.dispositivosmoviles.logic.data.getRamCharsDB
 import com.example.dispositivosmoviles.logic.marvelLogic.MarvelLogic
 import com.example.dispositivosmoviles.ui.utilities.DispositivosMoviles
 import java.lang.Exception
@@ -38,6 +40,38 @@ class RamLogic {
         }
 
         return itemList
+    }
+
+    suspend fun getAllRamCharsDB(): List<RamChars> {
+        val items: ArrayList<RamChars> = arrayListOf()
+        val items_aux = DispositivosMoviles.getDbInstance().ramDao().getAllCharacters()
+        items_aux.forEach {
+            items.add(
+                RamChars(
+                    it.nombre,
+                it.estado,
+            it.especie,
+            it.ubicacion,
+            it.origen,
+            it.imagen,
+            it.episode
+                )
+            )
+        }
+        return items
+    }
+
+    suspend fun insertRamCharstoDB(items: List<RamChars>){
+
+        var itemsDB = arrayListOf<RamCharsDB>()
+
+
+        items.forEach {
+            itemsDB.add(it.getRamCharsDB())
+        }
+
+        DispositivosMoviles.getDbInstance().ramDao().insertRamChar(itemsDB)
+
     }
 
 

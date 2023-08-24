@@ -22,6 +22,7 @@ import com.example.dispositivosmoviles.logic.data.RamChars
 import com.example.dispositivosmoviles.logic.marvelLogic.MarvelLogic
 import com.example.dispositivosmoviles.logic.ramLogic.RamLogic
 import com.example.dispositivosmoviles.ui.activities.DetailsMarvelItem
+import com.example.dispositivosmoviles.ui.activities.DetailsRamItem
 import com.example.dispositivosmoviles.ui.activities.RickAndMorty
 import com.example.dispositivosmoviles.ui.activities.dataStore
 import com.example.dispositivosmoviles.ui.adapters.MarvelAdapter
@@ -47,7 +48,7 @@ class RickAndMortyFragment : Fragment() {
 
 
     private var ramCharsItems: MutableList<RamChars> = mutableListOf<RamChars>()
-    //private var marvelCharsItemsDB: MutableList<MarvelChars> = mutableListOf<MarvelChars>()
+    private var ramCharsItemsDB: MutableList<RamChars> = mutableListOf<RamChars>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -74,26 +75,26 @@ class RickAndMortyFragment : Fragment() {
 
 
     private fun sendRamItem(item: RamChars): Unit {
-        val i = Intent(requireActivity(), DetailsMarvelItem::class.java)
+        val i = Intent(requireActivity(), DetailsRamItem::class.java)
         i.putExtra("name", item)
         startActivity(i)
     }
 
     private fun saveRamItem(item: RamChars): Boolean {
 
-//        return if (item == null || marvelCharsItemsDB.contains(item)) {
-//            false
-//        } else {
-//
-//            lifecycleScope.launch(Dispatchers.Main) {
-//                withContext(Dispatchers.IO) {
-//                    MarvelLogic().insertMarvelCharstoDB(listOf(item))
-//                    marvelCharsItemsDB = MarvelLogic().getAllMarvelChardDB().toMutableList()
-//                }
-//
-//            }
-//            true
-//        }
+        return if (item == null || ramCharsItemsDB.contains(item)) {
+            false
+        } else {
+
+            lifecycleScope.launch(Dispatchers.Main) {
+                withContext(Dispatchers.IO) {
+                    RamLogic().insertRamCharstoDB(listOf(item))
+                    ramCharsItemsDB = RamLogic().getAllRamCharsDB().toMutableList()
+                }
+
+            }
+            true
+        }
 
         return false
     }
