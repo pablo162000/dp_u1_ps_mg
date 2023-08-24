@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    tools:context=".ui.activities.PrincipalActivity">
+    tools:context=".ui.activities.PrincipalActivity"
+    android:background="@drawable/rickymarvel"
+    >
 
 
     <FrameLayout

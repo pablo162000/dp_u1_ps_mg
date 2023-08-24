@@ -263,10 +263,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnIngresar.setOnClickListener {
-            signInWithEmailAndPassword (
-                binding.textEmail.text.toString(),
-                binding.textPassword.text.toString()
-            )
+
+            if(binding.textEmail.text.isNotEmpty() &&  binding.textPassword.text.isNotEmpty()){
+                signInWithEmailAndPassword (
+                    binding.textEmail.text.toString(),
+                    binding.textPassword.text.toString()
+                )
+            }else {
+                Toast.makeText(
+                    baseContext,
+                    "Ingrese el correo y la contraseña",
+                    Toast.LENGTH_SHORT,
+                ).show()            }
+
 
 
         }

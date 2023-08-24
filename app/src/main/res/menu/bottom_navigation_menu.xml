@@ -4,15 +4,16 @@
 
     <item
         android:id="@+id/inicio"
-        android:icon="@drawable/home_48px"
+        android:icon="@drawable/marlogo"
+
         android:iconTint="#000000"
-        android:title="@string/menu_inicio"
+        android:title="Marvel"
         android:visible="true" />
 
     <item
         android:id="@+id/favoritos"
-        android:icon="@drawable/favorite_48px"
-        android:title="@string/menu_favoritos"
+        android:icon="@drawable/baseline_search_24"
+        android:title="Buscador"
 
         android:visible="true" />
 

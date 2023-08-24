@@ -35,6 +35,7 @@ class DetailsRamItem : AppCompatActivity() {
 
         if (item != null) {
             binding.txtName.text = item.nombre
+            binding.txtDescripcion.text = item.especie
             Picasso.get().load(item.imagen).into(binding.imgRam)
             binding.btnFavoritos.setOnClickListener {
                 var checkInsert: Boolean = saveRamItem(
