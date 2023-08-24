@@ -24,7 +24,7 @@ fun Result.getRamChars(): RamChars {
 
 
     val a = RamChars(
-        name,status,species,location.name,origin.name,image,gender)
+        id,name,status,species,location.name,origin.name,image,gender)
 
 
     return a

@@ -48,6 +48,7 @@ class RamLogic {
         items_aux.forEach {
             items.add(
                 RamChars(
+                    it.id,
                     it.nombre,
                 it.estado,
             it.especie,

@@ -9,6 +9,7 @@ import kotlinx.parcelize.Parcelize
 @Entity
 class RamCharsDB(
     @PrimaryKey(autoGenerate = true)
+    val id: Int,
     val nombre: String,
     val estado: String,
     val especie: String,

@@ -39,6 +39,7 @@ class DetailsRamItem : AppCompatActivity() {
             binding.btnFavoritos.setOnClickListener {
                 var checkInsert: Boolean = saveRamItem(
                     RamChars(
+                        item.id,
                         item.nombre,
                         item.estado,
                         item.especie,

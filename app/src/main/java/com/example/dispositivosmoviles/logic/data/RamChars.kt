@@ -7,6 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class RamChars(
+    val id:Int,
     val nombre: String,
     val estado: String,
     val especie: String,
@@ -18,6 +19,7 @@ data class RamChars(
 
 fun RamChars.getRamCharsDB(): RamCharsDB {
     return RamCharsDB(
+        id,
         nombre,
         estado,
         especie,
