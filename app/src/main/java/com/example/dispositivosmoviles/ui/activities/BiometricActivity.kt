@@ -52,7 +52,7 @@ class BiometricActivity : AppCompatActivity() {
 
                     override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                         super.onAuthenticationSucceeded(result)
-                        val miIntent = Intent(this@BiometricActivity,RickAndMorty::class.java)
+                        val miIntent = Intent(this@BiometricActivity,PrincipalActivity::class.java)
                         startActivity(miIntent)
                     }
 
