@@ -270,6 +270,10 @@ class MainActivity : AppCompatActivity() {
 
 
         }
+
+        binding.registro.setOnClickListener{
+            startActivity(Intent(this,RegisterActivity::class.java))
+        }
     }
 
 
