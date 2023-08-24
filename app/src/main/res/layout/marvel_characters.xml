@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:foregroundTint="#090909">
 
     <androidx.cardview.widget.CardView
         android:layout_width="170dp"
@@ -20,7 +21,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/fondo">
+            android:background="@drawable/fondomarvel1"
+            android:foregroundTint="#020202">
 
             <ImageView
                 android:id="@+id/imgMarvel"
@@ -37,6 +39,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
+                android:background="#430101"
+                android:backgroundTint="#912424"
+
+                android:backgroundTintMode="add"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imgMarvel"
@@ -48,6 +55,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
+                android:background="#430101"
+                android:backgroundTint="#C61818"
+                android:singleLine="false"
+                android:textColor="@color/white"
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtName"
@@ -59,12 +70,15 @@
                 android:layout_height="40dp"
                 android:layout_marginBottom="4dp"
                 android:background="#00FFFFFF"
-                android:pointerIcon="crosshair"
+                android:isScrollContainer="true"
+
                 android:text="Guardar"
                 app:cornerRadius="0dp"
                 app:icon="@drawable/favorite_48px"
                 app:iconGravity="top"
-                app:iconTint="#EEFF00"
+                app:iconSize="22dp"
+                app:iconTint="#BD1414"
+                app:iconTintMode="add"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 

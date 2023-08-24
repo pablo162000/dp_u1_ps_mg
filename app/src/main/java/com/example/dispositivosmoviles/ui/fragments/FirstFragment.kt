@@ -272,14 +272,16 @@ class FirstFragment : Fragment() {
 
             }
 
-        } else {
-            Snackbar.make(
-                binding.cardView2,
-                "No hay conexion",
-                Snackbar.LENGTH_LONG
-            )
-                .show()
         }
+
+//        else {
+//            Snackbar.make(
+//                binding.cardView2,
+//                "No hay conexion",
+//                Snackbar.LENGTH_LONG
+//            )
+//                .show()
+//        }
     }
 
 

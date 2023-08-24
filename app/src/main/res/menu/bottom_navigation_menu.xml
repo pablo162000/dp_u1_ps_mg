@@ -5,6 +5,7 @@
     <item
         android:id="@+id/inicio"
         android:icon="@drawable/home_48px"
+        android:iconTint="#000000"
         android:title="@string/menu_inicio"
         android:visible="true" />
 
@@ -12,11 +13,13 @@
         android:id="@+id/favoritos"
         android:icon="@drawable/favorite_48px"
         android:title="@string/menu_favoritos"
+
         android:visible="true" />
 
     <item
         android:id="@+id/chatgpt"
-        android:icon="@drawable/chatgpt_48px"
-        android:title="@string/menu_chatgpt"
+        android:icon="@drawable/rickymorty"
+        android:title="Rick y Moty"
+
         android:visible="true" />
 </menu>
