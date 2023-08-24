@@ -25,9 +25,8 @@
             android:name=".ui.activities.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.login.RegisterActivity"
-            android:exported="false"
-            android:label="@string/title_activity_register" />
+            android:name=".ui.activities.MenuBotones"
+            android:exported="false" />
         <activity
             android:name=".ui.activities.DetailsRamItem"
             android:exported="false" />
