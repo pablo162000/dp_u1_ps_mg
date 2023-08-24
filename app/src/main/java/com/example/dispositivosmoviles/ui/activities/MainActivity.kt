@@ -263,10 +263,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnIngresar.setOnClickListener {
-            authWithFireBaseEmail(
+
+            signInWithEmailAndPassword(
                 binding.textEmail.text.toString(),
                 binding.textPassword.text.toString()
             )
+
+
+//            authWithFireBaseEmail(
+//                binding.textEmail.text.toString(),
+//                binding.textPassword.text.toString()
+//            )
 
 
         }
@@ -306,7 +313,7 @@ class MainActivity : AppCompatActivity() {
                     Log.d(TAG, "signInWithEmail:success")
 
                     val user = auth.currentUser
-                    startActivity(Intent(this, PrincipalActivity::class.java))
+                    startActivity(Intent(this, MenuBotones::class.java))
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithEmail:failure", task.exception)
@@ -320,13 +327,14 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun recoveryPasswordWithEmail(email: String){
+    private fun recoveryPasswordWithEmail(email: String) {
 
         auth.sendPasswordResetEmail(email)
-            .addOnCompleteListener{ task ->
-                if(task.isSuccessful){
-                    Toast.makeText(this, "Correo de recuperacion enviado correctamente"
-                        , Toast.LENGTH_SHORT).show()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(
+                        this, "Correo de recuperacion enviado correctamente", Toast.LENGTH_SHORT
+                    ).show()
                     MaterialAlertDialogBuilder(this).apply {
                         setTitle("Alerta")
                         setMessage("Correo de recuperacion enviado correctamente")
@@ -427,8 +435,6 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-
-
         //como parametro necesitamos
         val appResultLocal =
             registerForActivityResult(StartActivityForResult()) { resultActivity ->
@@ -493,7 +499,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnHuella.setOnClickListener {
 
 
-            val miIntent = Intent(this@MainActivity,BiometricActivity::class.java)
+            val miIntent = Intent(this@MainActivity, BiometricActivity::class.java)
             startActivity(miIntent)
         }
 

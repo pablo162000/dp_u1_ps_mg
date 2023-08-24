@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.MenuBotones"
+    android:background="@drawable/fondomenu"
+    android:orientation="vertical"
+    android:gravity="center"
+    >
+
+    <Button
+        android:id="@+id/buttonCamara"
+        android:layout_width="169dp"
+        android:layout_height="100dp"
+        android:backgroundTint="#1FC2D1"
+        android:text="Camara"
+        app:icon="@drawable/baseline_camera_alt_24"
+        app:iconGravity="textTop"
+        app:iconSize="40dp"
+        app:cornerRadius="25px"
+        android:textSize="17dp"
+        tools:layout_editor_absoluteX="111dp"
+        tools:layout_editor_absoluteY="135dp" />
+
+    <Button
+        android:id="@+id/buttonNavigation"
+        android:layout_width="169dp"
+        android:layout_height="100dp"
+        android:backgroundTint="#3ECC41"
+        android:text="Apis"
+        android:textSize="17dp"
+        app:cornerRadius="25px"
+        app:icon="@drawable/apione"
+
+        app:iconGravity="textTop"
+        app:iconSize="45dp"
+        tools:layout_editor_absoluteX="222dp"
+        tools:layout_editor_absoluteY="480dp" />
+
+    <Button
+        android:id="@+id/buttonNotification"
+        android:layout_width="169dp"
+        android:layout_height="100dp"
+        android:backgroundTint="#E83636"
+        android:text="Notificaciones"
+        android:textSize="17dp"
+        app:cornerRadius="25px"
+
+        app:icon="@drawable/baseline_notifications_24"
+
+        app:iconGravity="textTop"
+        app:iconSize="40dp"
+        tools:layout_editor_absoluteX="135dp"
+        tools:layout_editor_absoluteY="266dp" />
+</LinearLayout>
