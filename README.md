@@ -24,7 +24,7 @@ La informacion de las series proviene de la API Rick and Morty: https://rickandm
 * Uso de Carrousels para la presentación de la información de las series.
 * Implementación de SwipeRefreshLayout.
   
-## Libreries
+## Libraries
 * Core
 * AppCompat
 * Material
