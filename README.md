@@ -19,7 +19,7 @@ La informacion de las series proviene de la API Rick and Morty: https://rickandm
 * Uso de fragments y FrameLayouts.
 * Autenticación Biométrica mediante la huella digital.
 * Control de solicitud de permisos.
-* Consumo de APIs utilizando retrofit y converterJson (configuracion de endpoints).
+* Consumo de APIs utilizando retrofit y converterJson (configuracion de endpoints y url base de APIs).
 * Implementación de procesos de ejecucion en segundo plano utilizando corrutinas.
 * Uso de Carrousels para la presentación de la información de las series.
 * Implementación de SwipeRefreshLayout.
