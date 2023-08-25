@@ -10,7 +10,7 @@ La informacion de las series proviene de la API Rick and Morty: https://rickandm
 * Notificaciones Programadas.
 * Uso de SQlite para almacenamiento y carga de datos.
 * Autentificacion mediante Firebase (Login y Registro).
-* MVVN Architecture.
+* MVVM Architecture.
 * Uso de RecyclerView y Adapters.
 * Obtención de informacion de series desde internet(Marvel y Rick and Morty).
 * Procesamiento de información de las imagenes utilizando Picasso.
