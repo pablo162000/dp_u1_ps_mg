@@ -51,6 +51,24 @@ La informacion de las series proviene de la API Rick and Morty: https://rickandm
 * Lifecycle LiveData KTX
 * Biometric
 * Shimmer
-* Firebase Analytics KTX
+* Firebase Analytics KTX          
 * Firebase Auth KTX
 * CoordinatorLayout
+## Capturas
+![](https://github.com/pablo162000/dp_u1_ps_mg/blob/main/login.png)
+![](https://github.com/pablo162000/dp_u1_ps_mg/blob/main/registro.png)
+![](https://github.com/pablo162000/dp_u1_ps_mg/blob/main/autenticacionbio.png)
+![](https://github.com/pablo162000/dp_u1_ps_mg/blob/main/botones%20(2).png)
+![](https://github.com/pablo162000/dp_u1_ps_mg/blob/main/navegacion.png)
+![](https://github.com/pablo162000/dp_u1_ps_mg/blob/main/marvel.png)
+![](https://github.com/pablo162000/dp_u1_ps_mg/blob/main/marvelfavoritos.png)
+![](https://github.com/pablo162000/dp_u1_ps_mg/blob/main/buscador.png)
+![](https://github.com/pablo162000/dp_u1_ps_mg/blob/main/rickymorty.png)
+![](https://github.com/pablo162000/dp_u1_ps_mg/blob/main/rickdetails.png)
+![](https://github.com/pablo162000/dp_u1_ps_mg/blob/main/camara.png)
+![](https://github.com/pablo162000/dp_u1_ps_mg/blob/main/notificaciones.png)
+
+## Demo
+https://github.com/pablo162000/dp_u1_ps_mg/blob/main/demo.mp4
+
+
