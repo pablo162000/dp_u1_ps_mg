@@ -1,4 +1,5 @@
-
+# Integrantes
+Pablo Suntaxi - Michael Garcia
 
 # Series App
 La informacion de las series proviene de la API Rick and Morty: https://rickandmortyapi.com  y de la API de MARVEL: https://developer.marvel.com
@@ -69,6 +70,7 @@ La informacion de las series proviene de la API Rick and Morty: https://rickandm
 ![](https://github.com/pablo162000/dp_u1_ps_mg/blob/main/notificaciones.png)
 
 ## Demo
-https://github.com/pablo162000/dp_u1_ps_mg/blob/main/demo.mp4
+https://github.com/pablo162000/dp_u1_ps_mg/assets/101227441/cb2a9bb1-a5dd-4946-bc2f-e1df0dbde5fb
+
 
 
