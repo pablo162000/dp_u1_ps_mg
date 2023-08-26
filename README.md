@@ -24,6 +24,7 @@ La informacion de las series proviene de la API Rick and Morty: https://rickandm
 * Implementación de procesos de ejecucion en segundo plano utilizando corrutinas.
 * Uso de Carrousels para la presentación de la información de las series.
 * Implementación de SwipeRefreshLayout.
+* Uso de AlarmManager y BroadcastReceiver para envio de notificaciones programadas.
   
 ## Libraries
 * Core
